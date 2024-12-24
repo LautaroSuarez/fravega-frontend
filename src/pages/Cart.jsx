@@ -46,7 +46,9 @@ function Cart() {
               <div>
                 <strong>{item.name}</strong> (x{item.quantity}) - ${item.price} c/u
               </div>
-              <RemoveButton onClick={() => removeFromCart(item._id)}>Eliminar</RemoveButton>
+              <RemoveButton onClick={() => removeFromCart(item._id)}>
+                Eliminar
+              </RemoveButton>
             </CartItem>
           ))}
           <hr />

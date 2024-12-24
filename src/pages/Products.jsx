@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import API from '../services/api';
-import axios from 'axios';
 import styled from 'styled-components';
+import { CartContext } from '../context/CartContext';
 
 const ProductsContainer = styled.div`
-  max-width: 1200px; /* ancho máximo, ajusta según tu preferencia */
-  margin: 20px auto; /* centrado horizontal */
-  padding: 0 20px;   /* un poco de padding para que no pegue a los bordes */
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
 `;
 
 const ProductsGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center; /*centrar las cards*/
+  justify-content: center;
 `;
 
 const ProductCard = styled.div`
@@ -42,13 +42,25 @@ const Price = styled.p`
   margin: 8px 0;
 `;
 
+const AddToCartButton = styled.button`
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: #218838;
+  }
+`;
+
 function Products() {
   const [products, setProducts] = useState([]);
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Consulta a tu backend
         const res = await API.get('/api/products');
         setProducts(res.data);
       } catch (error) {
@@ -67,6 +79,9 @@ function Products() {
             <ProductImage src={prod.image} alt={prod.name} />
             <ProductName>{prod.name}</ProductName>
             <Price>${prod.price}</Price>
+            <AddToCartButton onClick={() => addToCart(prod)}>
+              Añadir al carrito
+            </AddToCartButton>
           </ProductCard>
         ))}
       </ProductsGrid>

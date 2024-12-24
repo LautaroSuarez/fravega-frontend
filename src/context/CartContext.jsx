@@ -8,7 +8,7 @@ export function CartProvider({ children }) {
   const addToCart = (product) => {
     const itemInCart = cartItems.find((item) => item._id === product._id);
     if (itemInCart) {
-      // Aumentar la cantidad
+      // Aumenta la cantidad
       const updatedCart = cartItems.map((item) =>
         item._id === product._id
           ? { ...item, quantity: item.quantity + 1 }
@@ -16,7 +16,7 @@ export function CartProvider({ children }) {
       );
       setCartItems(updatedCart);
     } else {
-      // Agregar producto con quantity 1
+      // Agrego productos con quantity 1
       setCartItems([...cartItems, { ...product, quantity: 1 }]);
     }
   };
@@ -32,3 +32,4 @@ export function CartProvider({ children }) {
     </CartContext.Provider>
   );
 }
+
