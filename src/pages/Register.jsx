@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import styled from 'styled-components';
+import API from '../services/api';
 
 const Container = styled.div`
   max-width: 400px;
@@ -63,8 +64,7 @@ function Register() {
     validationSchema,
     onSubmit: async (values, actions) => {
       try {
-        // Tengo que cambiar la ruta, no olvidar
-        const response = await axios.post('http://localhost:5000/api/users/register', values);
+        const response = await axios.post('https://fravega-backend.onrender.com/api/users/register', values);
         alert(response.data.message || 'Usuario registrado exitosamente');
         actions.resetForm();
       } catch (error) {

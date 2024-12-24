@@ -1,4 +1,5 @@
 import React from 'react';
+import API from '../services/api';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -63,7 +64,7 @@ function Login() {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('http://localhost:5000/api/users/login', values);
+        const response = await API.post('/api/users/login', values);
         const { token } = response.data;
         localStorage.setItem('token', token);
         alert('¡Inicio de sesión exitoso!');

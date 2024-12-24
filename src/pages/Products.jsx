@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import API from '../services/api';
 import axios from 'axios';
 import styled from 'styled-components';
-import { CartContext } from '../context/CartContext';
 
 const ProductsContainer = styled.div`
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 0 20px;
+  max-width: 1200px; /* ancho máximo, ajusta según tu preferencia */
+  margin: 20px auto; /* centrado horizontal */
+  padding: 0 20px;   /* un poco de padding para que no pegue a los bordes */
 `;
 
 const ProductsGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: center; /* Centra las cards */
+  justify-content: center; /*centrar las cards*/
 `;
 
 const ProductCard = styled.div`
@@ -34,36 +34,22 @@ const ProductImage = styled.img`
 const ProductName = styled.h3`
   font-size: 1rem;
   color: #333;
-  margin: 5px 0;
 `;
 
 const Price = styled.p`
   color: #0064e0;
   font-weight: bold;
-  margin: 5px 0;
-`;
-
-const AddButton = styled.button`
-  background-color: #0064e0;
-  color: #fff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.9;
-  }
+  margin: 8px 0;
 `;
 
 function Products() {
   const [products, setProducts] = useState([]);
-  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/products');
+        // Consulta a tu backend
+        const res = await API.get('/api/products');
         setProducts(res.data);
       } catch (error) {
         console.error(error);
@@ -81,7 +67,6 @@ function Products() {
             <ProductImage src={prod.image} alt={prod.name} />
             <ProductName>{prod.name}</ProductName>
             <Price>${prod.price}</Price>
-            <AddButton onClick={() => addToCart(prod)}>Agregar al carrito</AddButton>
           </ProductCard>
         ))}
       </ProductsGrid>
